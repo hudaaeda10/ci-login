@@ -3,6 +3,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Menu extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        is_logged_in();
+    }
+
     public function index()
     {
         $data['title'] = 'Menu Management';
@@ -21,6 +27,45 @@ class Menu extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Menu Added!</div>');
             redirect('menu');
         }
+    }
+
+    public function editmenu()
+    {
+        $this->load->model('Menu_model', 'menu');
+        echo json_encode($this->menu->getMenuId($this->input->post('id')));
+    }
+
+    public function edit()
+    {
+        $this->load->model('Menu_model', 'menu');
+        $data['title'] = 'Menu Management';
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+
+
+        $this->form_validation->set_rules('menu', 'Menu', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('menu/edit', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $data = [
+                "menu" => $this->input->post('menu')
+            ];
+            $this->db->where('id', $this->input->post('id'));
+            $this->db->update('user_menu', $data);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menu Updated!</div>');
+            redirect('menu');
+        }
+    }
+
+    public function delete($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('user_menu');
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Menu has been deleted!</div>');
+        redirect('menu');
     }
 
     public function submenu()

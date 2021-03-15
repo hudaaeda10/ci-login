@@ -10,7 +10,7 @@
                 <div class="alert alert-danger" role="alert"> <?= validation_errors(); ?> </div>
             <?php endif; ?>
             <?= $this->session->flashdata('message'); ?>
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newSubmenuModal">Add Submenu</a>
+            <a href="" class="btn btn-primary mb-3 modalNewSubmenu" data-toggle="modal" data-target="#newSubmenuModal">Add Submenu</a>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -34,7 +34,7 @@
                             <td><?= $sm['icon']; ?></td>
                             <td><?= $sm['is_active']; ?></td>
                             <td>
-                                <a href="" class="badge badge-success">Edit</a>
+                                <a href="" class="badge badge-success modalEditSubmenu" data-toggle="modal" data-target="#newSubmenuModal" data-id="<?= $sm['id']; ?>">Edit</a>
                                 <a href="" class="badge badge-danger">Delete</a>
                             </td>
                         </tr>
@@ -60,8 +60,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu/submenu'); ?>" method="POST">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form action="<?= base_url('menu/submenu'); ?>" method="POST">
+                    <input type="hidden" id="id" name="id">
                     <div class="form-group">
                         <input type="text" class="form-control" id="title" name="title" placeholder="Title Menu">
                     </div>
@@ -87,11 +88,11 @@
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
         </div>
         </form>
     </div>

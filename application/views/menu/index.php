@@ -9,7 +9,7 @@
             <?= form_error('menu', '<div class="alert alert-danger" role="alert">', '</div>'); ?>
 
             <?= $this->session->flashdata('message'); ?>
-            <a href="" class="btn btn-primary mb-3" data-toggle="modal" data-target="#newMenuModal">Add Menu</a>
+            <a href="" class="btn btn-primary mb-3 modalTambahMenu" data-toggle="modal" data-target="#newMenuModal">Add Menu</a>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -25,8 +25,8 @@
                             <th scope="row"><?= $i++; ?></th>
                             <td><?= $m['menu']; ?></td>
                             <td>
-                                <a href="" class="badge badge-success">Edit</a>
-                                <a href="" class="badge badge-danger">Delete</a>
+                                <a href="" class="badge badge-success modalUbahMenu" data-toggle="modal" data-target="#newMenuModal" data-id="<?= $m['id']; ?>">Edit</a>
+                                <a href="<?= base_url('menu/delete/'); ?><?= $m['id']; ?>" class="badge badge-danger" onclick="return confirm('Are you sure to deleted?');">Delete</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -51,16 +51,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu'); ?>" method="POST">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form action="<?= base_url('menu'); ?>" method="POST">
+                    <input type="hidden" name="id" id="id">
                     <div class="form-group">
                         <input type="text" class="form-control" id="menu" name="menu" placeholder="Menu Name">
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </div>
         </div>
         </form>
     </div>
