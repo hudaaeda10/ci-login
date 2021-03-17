@@ -11,6 +11,11 @@ class Auth extends CI_Controller
 
     public function index()
     {
+        // agar tak bisa ke auth ketika login
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
         $data['title'] = 'Login Page';
 
         // validation input login
@@ -62,6 +67,11 @@ class Auth extends CI_Controller
 
     public function registration()
     {
+        // agar tak bisa ke auth ketika login
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
         $data['title'] = 'CI Login Website';
         // rule form validation
         $this->form_validation->set_rules('name', 'Name', 'required|trim');                         //trim agar spasi di awal dan di akhir tidak masuk database
